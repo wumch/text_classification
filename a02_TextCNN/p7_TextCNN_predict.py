@@ -2,8 +2,8 @@
 #prediction using model.
 #process--->1.load data(X:list of lint,y:int). 2.create session. 3.feed data. 4.predict
 import sys
+from importlib import reload
 reload(sys)
-sys.setdefaultencoding('utf8')
 import tensorflow as tf
 import numpy as np
 #from p5_fastTextB_model import fastTextB as fastText
@@ -11,7 +11,7 @@ from a02_TextCNN.other_experiement.data_util_zhihu import load_data_predict,load
 from tflearn.data_utils import pad_sequences #to_categorical
 import os
 import codecs
-from p7_TextCNN_model import TextCNN
+from a02_TextCNN.p7_TextCNN_model import TextCNN
 
 #configuration
 FLAGS=tf.app.flags.FLAGS
@@ -27,7 +27,7 @@ tf.app.flags.DEFINE_integer("num_epochs",15,"number of epochs.")
 tf.app.flags.DEFINE_integer("validate_every", 1, "Validate every validate_every epochs.") #每10轮做一次验证
 tf.app.flags.DEFINE_string("predict_target_file","text_cnn_title_desc_checkpoint/zhihu_result_cnn_multilabel_v6_e14.csv","target file path for final prediction")
 tf.app.flags.DEFINE_string("predict_source_file",'test-zhihu-forpredict-title-desc-v6.txt',"target file path for final prediction") #test-zhihu-forpredict-v4only-title.txt
-tf.app.flags.DEFINE_string("word2vec_model_path","zhihu-word2vec-title-desc.bin-100","word2vec's vocabulary and vectors") #zhihu-word2vec.bin-100
+tf.app.flags.DEFINE_string("word2vec_model_path","data/zhihu-word2vec-title-desc.bin-100","word2vec's vocabulary and vectors") #zhihu-word2vec.bin-100
 tf.app.flags.DEFINE_integer("num_filters", 256, "number of filters") #128
 
 ##############################################################################################################################################

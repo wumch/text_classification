@@ -10,20 +10,21 @@ from tflearn.data_utils import pad_sequences
 _GO="_GO"
 _END="_END"
 _PAD="_PAD"
+data_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'data')
 
 #use pretrained word embedding to get word vocabulary and labels, and its relationship with index
 def create_voabulary(simple=None,word2vec_model_path='zhihu-word2vec-title-desc.bin-100',name_scope=''):
-    cache_path ='cache_vocabulary_label_pik/'+ name_scope + "_word_voabulary.pik"
+    cache_path =os.path.join(data_path, 'cache_vocabulary_label_pik', name_scope + "_word_voabulary.pik")
     print("cache_path:",cache_path,"file_exists:",os.path.exists(cache_path))
     if os.path.exists(cache_path):#if exists, load it; otherwise create it.
-        with open(cache_path, 'r') as data_f:
+        with open(cache_path, 'rb') as data_f:
             vocabulary_word2index, vocabulary_index2word=pickle.load(data_f)
             return vocabulary_word2index, vocabulary_index2word
     else:
         vocabulary_word2index={}
         vocabulary_index2word={}
         if simple is not None:
-            word2vec_model_path='zhihu-word2vec.bin-100'
+            word2vec_model_path=os.path.join(data_path, 'zhihu-word2vec-title-desc.bin-100')
         print("create vocabulary. word2vec_model_path:",word2vec_model_path)
         model=word2vec.load(word2vec_model_path,kind='bin')
         vocabulary_word2index['PAD_ID']=0
@@ -39,7 +40,7 @@ def create_voabulary(simple=None,word2vec_model_path='zhihu-word2vec-title-desc.
 
         #save to file system if vocabulary of words is not exists.
         if not os.path.exists(cache_path): #如果不存在写到缓存文件中
-            with open(cache_path, 'a') as data_f:
+            with open(cache_path, 'ab') as data_f:
                 pickle.dump((vocabulary_word2index,vocabulary_index2word), data_f)
     return vocabulary_word2index,vocabulary_index2word
 
@@ -48,7 +49,7 @@ def create_voabulary_label(voabulary_label='train-zhihu4-only-title-all.txt',nam
     print("create_voabulary_label_sorted.started.traning_data_path:",voabulary_label)
     cache_path ='cache_vocabulary_label_pik/'+ name_scope + "_label_voabulary.pik"
     if os.path.exists(cache_path):#如果缓存文件存在，则直接读取
-        with open(cache_path, 'r') as data_f:
+        with open(cache_path, 'rb') as data_f:
             vocabulary_word2index_label, vocabulary_index2word_label=pickle.load(data_f)
             return vocabulary_word2index_label, vocabulary_index2word_label
     else:
@@ -89,7 +90,7 @@ def create_voabulary_label(voabulary_label='train-zhihu4-only-title-all.txt',nam
 
         #save to file system if vocabulary of words is not exists.
         if not os.path.exists(cache_path): #如果不存在写到缓存文件中
-            with open(cache_path, 'a') as data_f:
+            with open(cache_path, 'ab') as data_f:
                 pickle.dump((vocabulary_word2index_label,vocabulary_index2word_label), data_f)
     print("create_voabulary_label_sorted.ended.len of vocabulary_label:",len(vocabulary_index2word_label))
     return vocabulary_word2index_label,vocabulary_index2word_label

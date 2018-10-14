@@ -25,7 +25,7 @@ tf.app.flags.DEFINE_integer("embed_size",100,"embedding size")
 tf.app.flags.DEFINE_boolean("is_training",False,"is traning.true:tranining,false:testing/inference")
 tf.app.flags.DEFINE_string("predict_target_file","text_rcnn_title_desc_checkpoint2/zhihu_result_rcnn_multilabel.csv","target file path for final prediction")
 tf.app.flags.DEFINE_string("predict_source_file",'test-zhihu-forpredict-title-desc-v6.txt',"target file path for final prediction") #test-zhihu-forpredict-v4only-title.txt
-tf.app.flags.DEFINE_string("word2vec_model_path","zhihu-word2vec-title-desc.bin-100","word2vec's vocabulary and vectors") #zhihu-word2vec.bin-100
+tf.app.flags.DEFINE_string("word2vec_model_path","/bak/download/zhihu-word2vec-title-desc.bin-100","word2vec's vocabulary and vectors") #zhihu-word2vec.bin-100
 tf.app.flags.DEFINE_boolean("multi_label_flag",True,"use multi label or single label.")
 
 #1.load data(X:list of lint,y:int). 2.create session. 3.feed data. 4.training (5.validation) ,(6.prediction)
